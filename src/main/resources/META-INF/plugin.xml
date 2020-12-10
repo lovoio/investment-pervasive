@@ -1,0 +1,31 @@
+<idea-plugin>
+    <id>com.lovoio.investment-pervasive</id>
+    <name>IP</name>
+    <vendor email="lovoio@126.com" url="http://www.lovoio.com">none</vendor>
+
+    <description><![CDATA[
+     投资无处不在.<br>
+    <em>采用新浪的数据接口。
+    支持美股，港股，A股，常用指数，基金的实时更新查看 </em>
+    ]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="config.AppSettingState"/>
+        <!-- Add your extensions here -->
+        <toolWindow icon="/icon_mt.png"
+                    anchor="left" id="IP"
+                    factoryClass="window.WindowFactory"/>
+
+        <applicationConfigurable id="mns_setting" groupId="other"
+                                 instance="window.setting.ConfigWindow"
+                                 displayName="Investment Pervasive"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
