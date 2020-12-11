@@ -24,6 +24,6 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-     1.0.1： fixed setting persistence<br>
+     1.0.1： fixed setting persistence,add Event Log<br>
      """
 }
