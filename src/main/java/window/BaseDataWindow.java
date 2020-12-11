@@ -75,7 +75,6 @@ public abstract class BaseDataWindow {
      * @param columnNames 数据窗口表头
      */
     protected void startScheduler(String columnNames) {
-
         this.scheduler = globalConfig.scheduler(
                 this,
                 hashMap,

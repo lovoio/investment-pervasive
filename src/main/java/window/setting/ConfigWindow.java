@@ -6,6 +6,7 @@ import config.AppSettingState;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 import window.BaseDataWindow;
+import window.WindowFactory;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -96,6 +97,7 @@ public class ConfigWindow implements Configurable {
          *通知所有数据窗口更新
          */
         BaseDataWindow.updateWindowsConfig();
+        WindowFactory.logger.info("配置更新完成");
     }
 
 

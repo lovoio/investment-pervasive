@@ -3,7 +3,9 @@ package entity.dto;
 import config.AppSettingState;
 import config.HttpClientPool;
 import util.PinyinUtils;
+import window.WindowFactory;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,12 +92,13 @@ public abstract class BaseData {
             String result = HttpClientPool.INSTANCE.get(this.uri + this.paramCodes);
             String[] dataArray = result.split("\";\n");
             if (dataArray == null || dataArray.length < 1) {
+                WindowFactory.logger.info(this.uri + this.paramCodes + "---获取数据为空:" +result);
                 return null;
             }
             List<String[]> parse = parse(dataArray);
             return parse;
         } catch (Exception e) {
-            e.printStackTrace();
+            WindowFactory.logger.info(this.uri + this.paramCodes + "---获取数据异常:" + e.getMessage());
             return null;
         }
     }

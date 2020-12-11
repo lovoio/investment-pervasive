@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import window.WindowFactory;
 
 import java.net.URLDecoder;
 
@@ -69,6 +70,7 @@ public enum HttpClientPool {
             response = this.getHttpClient().execute(request);
             return EntityUtils.toString(response.getEntity(), "UTF-8");
         } catch (Exception e) {
+            WindowFactory.logger.info(URLDecoder.decode(url, "UTF-8") + "---网络请求异常:" + e.getMessage());
             throw new Exception("got an error from HTTP for url : " + URLDecoder.decode(url, "UTF-8"), e);
         } finally {
             if (response != null) {

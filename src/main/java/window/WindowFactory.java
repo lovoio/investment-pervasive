@@ -7,6 +7,7 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.content.ContentManager;
 import org.jetbrains.annotations.NotNull;
+import util.LoggerFactory;
 
 /**
  * @author : Roc
@@ -14,8 +15,11 @@ import org.jetbrains.annotations.NotNull;
  * @description : 窗口工厂，所有数据窗口都在这里创建并添加
  **/
 public class WindowFactory implements ToolWindowFactory {
+    public static LoggerFactory logger;
+
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
+        logger = LoggerFactory.getLogger(project);
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
 
         IndexWindow indexWindow = new IndexWindow();

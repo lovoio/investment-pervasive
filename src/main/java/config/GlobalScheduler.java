@@ -2,6 +2,7 @@ package config;
 
 import entity.dto.BaseData;
 import window.BaseDataWindow;
+import window.WindowFactory;
 
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -45,7 +46,9 @@ public enum GlobalScheduler {
      * @param window
      */
     public void stopScheduler(BaseDataWindow window) {
-        ScheduledFuture<?> future = windowScheduleMap.get(window.getClass());
+        Class<? extends BaseDataWindow> windowClass = window.getClass();
+        WindowFactory.logger.info(windowClass.getSimpleName() + "定时任务准备关闭");
+        ScheduledFuture<?> future = windowScheduleMap.get(windowClass);
         if (future != null) {
             future.cancel(false);
         }
@@ -90,10 +93,11 @@ public enum GlobalScheduler {
                 Object[][] array = indices.toArray(new Object[][]{});
                 consumer.accept(array);
             } catch (Exception e) {
-                e.printStackTrace();
+                WindowFactory.logger.info(clazz.getSimpleName() + "定时任务异常：" + e.getMessage());
             }
         }, appSetting.delay, appSetting.getPeriod(), TimeUnit.SECONDS);
         windowScheduleMap.put(clazz, scheduledFuture);
+        WindowFactory.logger.info(clazz.getSimpleName() + "定时任务已创建！");
         return scheduledFuture;
     }
 

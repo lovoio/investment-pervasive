@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.rocking'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     maven { url 'https://maven.aliyun.com/repository/google' }
@@ -24,6 +24,6 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+     1.0.1： fixed setting persistence<br>
+     """
 }

@@ -1,5 +1,6 @@
 package config;
 
+import com.intellij.ide.impl.ProjectUtil;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
@@ -7,6 +8,9 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import window.WindowFactory;
+
+import java.net.URLDecoder;
 
 /**
  * @author : Roc
@@ -60,8 +64,16 @@ public class AppSettingState implements PersistentStateComponent<AppSettingState
     }
 
     public static AppSettingState getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE =  ServiceManager.getService(AppSettingState.class);
+        /**
+         * 兼容测试
+         */
+        try {
+            AppSettingState service = ServiceManager.getService(AppSettingState.class);
+            if (service != null) {
+                INSTANCE = service;
+            }
+        } catch (Exception e) {
+            WindowFactory.logger.info("获取持久化配置异常:" + e.getMessage());
         }
         return INSTANCE;
     }
