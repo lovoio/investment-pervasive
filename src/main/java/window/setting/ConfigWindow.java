@@ -83,7 +83,7 @@ public class ConfigWindow implements Configurable {
     }
 
     @Override
-    public void apply() throws ConfigurationException {
+    public void apply() {
         config.setHiddenMode(isHideMode.isSelected());
         config.setFundCodes(fundCodes.getText());
         config.setHkStockCodes(hkStockCodes.getText());
@@ -93,9 +93,7 @@ public class ConfigWindow implements Configurable {
         config.setSzStockCodes(szStockCodes.getText());
         config.setUsaStockCodes(usaStockCodes.getText());
         config.setFundCodes(fundCodes.getText());
-        /**
-         *通知所有数据窗口更新
-         */
+        /*通知所有数据窗口更新*/
         BaseDataWindow.updateWindowsConfig();
         WindowFactory.logger.info("配置更新完成");
     }
@@ -117,10 +115,7 @@ public class ConfigWindow implements Configurable {
     public void reset() {
     }
 
-    @Override
-    public void disposeUIResources() {
 
-    }
 
     @Override
     public void cancel() {

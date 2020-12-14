@@ -1,4 +1,4 @@
-package entity.dto;
+package dto.entity;
 
 import config.AppSettingState;
 import org.junit.Assert;
@@ -46,6 +46,6 @@ public class BaseDataTest  {
     private void assertBaseData(BaseData baseData) {
         List<String[]> dates = baseData.getData();
         Assert.assertTrue(dates != null && !dates.isEmpty());
-        dates.stream().map(a -> Arrays.toString(a)).forEach(System.out::println);
+        dates.stream().map(Arrays::toString).forEach(System.out::println);
     }
 }

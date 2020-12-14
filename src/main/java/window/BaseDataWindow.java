@@ -2,17 +2,14 @@ package window;
 
 import config.AppSettingState;
 import config.GlobalScheduler;
-import entity.dto.BaseData;
+import dto.entity.BaseData;
 import util.PinyinUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
@@ -27,7 +24,7 @@ public abstract class BaseDataWindow {
     /**
      * 窗口的定时任务
      */
-    protected ScheduledFuture scheduler;
+    protected ScheduledFuture<?> scheduler;
 
     /**
      * 全局的窗口共享,处理一个窗口被打开多次的情况
@@ -38,7 +35,7 @@ public abstract class BaseDataWindow {
      * 统一更新所有窗口对象的配置
      */
     public static void updateWindowsConfig() {
-        windowsMap.values().stream().flatMap(l -> l.stream()).forEach(bdw -> {
+        windowsMap.values().stream().flatMap(Collection::stream).forEach(bdw -> {
             for (BaseData value : bdw.hashMap.values()) {
                 value.resetCodes();
             }
@@ -64,14 +61,15 @@ public abstract class BaseDataWindow {
     /**
      * 更新窗口Table视图
      *
-     * @param tableModel
-     * @param time
+     * @param tableModel 数据表格模型
+     * @param time 时间字符串
      */
     abstract void updateTableView(TableModel tableModel, String time);
 
     /**
      * 展示数据
-     *
+     * 定时任务推送到所有窗口(开启多个idea窗口时)
+     * 数据面板不展示则不需要更新
      * @param columnNames 数据窗口表头
      */
     protected void startScheduler(String columnNames) {
@@ -79,17 +77,11 @@ public abstract class BaseDataWindow {
                 this,
                 hashMap,
                 objArray -> {
-                    /**
-                     * 定时任务推送到所有窗口(开启多个idea窗口时)
-                     */
                     String time = GlobalScheduler.TIME_FORMATTER.format(LocalDateTime.now());
                     String columnStr = AppSettingState.getInstance().getHiddenMode() ? PinyinUtils.toPinyin(columnNames) : columnNames;
                     DefaultTableModel model = new DefaultTableModel(objArray, columnStr.split(","));
                     List<BaseDataWindow> windows = windowsMap.get(this.getClass());
                     for (BaseDataWindow window : windows) {
-                        /**
-                         * 数据面板不展示则不需要更新
-                         */
                         if (window.getContent().isShowing()) {
                             window.updateTableView(model, time);
                         }
@@ -100,7 +92,7 @@ public abstract class BaseDataWindow {
     /**
      * 当无人关注时返回true
      *
-     * @return
+     * @return boolean
      */
     public boolean isUnattended() {
         List<BaseDataWindow> windows = windowsMap.get(this.getClass());

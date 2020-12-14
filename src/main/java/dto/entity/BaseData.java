@@ -1,4 +1,4 @@
-package entity.dto;
+package dto.entity;
 
 import config.AppSettingState;
 import config.HttpClientPool;
@@ -32,7 +32,7 @@ public abstract class BaseData {
     /**
      * 所有子类共享，相同uri的可以节省http请求
      */
-    protected static Map<String, Function<String, String[]>> hashMap = new HashMap<>(8);
+    private static Map<String, Function<String, String[]>> hashMap = new HashMap<>(8);
     /**
      * 接口要请求的参数代码
      */
@@ -50,7 +50,7 @@ public abstract class BaseData {
     /**
      * 接口数据解析配置
      *
-     * @param hashMap
+     * @param hashMap 数据转换的函数map
      */
     abstract void initParse(Map<String, Function<String, String[]>> hashMap);
 
@@ -59,15 +59,10 @@ public abstract class BaseData {
     }
 
     /**
-     * 隐秘模式处理中文
-     */
-    Function<String, String> fun = s -> AppSettingState.getInstance().getHiddenMode() ? PinyinUtils.toPinyin(s) : s;
-
-    /**
      * 解析数据
      *
-     * @param dataArray
-     * @return
+     * @param dataArray 数据的数组集合
+     * @return 处理后对应行列的数据集合
      */
     public List<String[]> parse(String[] dataArray) {
         List<String[]> arrayList = new ArrayList<>();
@@ -85,7 +80,7 @@ public abstract class BaseData {
     /**
      * 获取数据
      *
-     * @return
+     * @return 处理后的行列数据集合
      */
     public List<String[]> getData() {
         try {
@@ -95,8 +90,7 @@ public abstract class BaseData {
                 WindowFactory.logger.info(this.uri + this.paramCodes + "---获取数据为空:" +result);
                 return null;
             }
-            List<String[]> parse = parse(dataArray);
-            return parse;
+            return parse(dataArray);
         } catch (Exception e) {
             WindowFactory.logger.info(this.uri + this.paramCodes + "---获取数据异常:" + e.getMessage());
             return null;

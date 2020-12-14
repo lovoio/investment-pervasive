@@ -1,6 +1,5 @@
 package config;
 
-import com.intellij.ide.impl.ProjectUtil;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
@@ -10,8 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import window.WindowFactory;
 
-import java.net.URLDecoder;
-
 /**
  * @author : Roc
  * @date : 2020-12-10 13:58
@@ -20,34 +17,34 @@ import java.net.URLDecoder;
 @State(name = "config.AppSettingState", storages = {@Storage("ip_plugin_setting.xml")})
 public class AppSettingState implements PersistentStateComponent<AppSettingState> {
 
-    private static final Boolean IsHiddenModeDefault = false;
+    private static final Boolean IS_HIDDEN_MODE = false;
 
-    private static final String IndexCodesDefault = "s_sh000001,s_sh000300,s_sz399001,rt_hkHSI,gbDji,gb_ixic,gb_inx,hf_YM";
+    private static final String INDEX_CODES = "s_sh000001,s_sh000300,s_sz399001,rt_hkHSI,gbDji,gb_ixic,gb_inx,hf_YM";
 
-    private static final String ShStockCodesDefault = "600585";
+    private static final String SH_STOCK_CODES = "600585";
 
-    private static final String SzStockCodesDefault = "000895";
+    private static final String SZ_STOCK_CODES = "000895";
 
-    private static final String HkStockCodesDefault = "00700";
+    private static final String HK_STOCK_CODES = "00700";
 
-    private static final String UsaStockCodesDefault = "aapl";
+    private static final String USA_STOCK_CODES = "aapl";
 
-    private static final String FundCodesDefault = "sz159983";
+    private static final String FUND_CODES = "sz159983";
 
 
-    private Boolean isHiddenMode = IsHiddenModeDefault;
+    private Boolean isHiddenMode = IS_HIDDEN_MODE;
 
-    private String indexCodes = IndexCodesDefault;
+    private String indexCodes = INDEX_CODES;
 
-    private String shStockCodes = ShStockCodesDefault;
+    private String shStockCodes = SH_STOCK_CODES;
 
-    private String szStockCodes = SzStockCodesDefault;
+    private String szStockCodes = SZ_STOCK_CODES;
 
-    private String hkStockCodes = HkStockCodesDefault;
+    private String hkStockCodes = HK_STOCK_CODES;
 
-    private String usaStockCodes = UsaStockCodesDefault;
+    private String usaStockCodes = USA_STOCK_CODES;
 
-    private String fundCodes = FundCodesDefault;
+    private String fundCodes = FUND_CODES;
     /**
      * 延迟执行时间（秒）
      */
@@ -64,9 +61,6 @@ public class AppSettingState implements PersistentStateComponent<AppSettingState
     }
 
     public static AppSettingState getInstance() {
-        /**
-         * 兼容测试
-         */
         try {
             AppSettingState service = ServiceManager.getService(AppSettingState.class);
             if (service != null) {
@@ -157,12 +151,12 @@ public class AppSettingState implements PersistentStateComponent<AppSettingState
      * 重置
      */
     public void reset() {
-        setHiddenMode(IsHiddenModeDefault);
-        setIndexCodes(IndexCodesDefault);
-        setShStockCodes(ShStockCodesDefault);
-        setSzStockCodes(SzStockCodesDefault);
-        setHkStockCodes(HkStockCodesDefault);
-        setUsaStockCodes(UsaStockCodesDefault);
-        setFundCodes(FundCodesDefault);
+        setHiddenMode(IS_HIDDEN_MODE);
+        setIndexCodes(INDEX_CODES);
+        setShStockCodes(SH_STOCK_CODES);
+        setSzStockCodes(SZ_STOCK_CODES);
+        setHkStockCodes(HK_STOCK_CODES);
+        setUsaStockCodes(USA_STOCK_CODES);
+        setFundCodes(FUND_CODES);
     }
 }

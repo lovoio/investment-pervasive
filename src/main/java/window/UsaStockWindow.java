@@ -1,6 +1,6 @@
 package window;
 
-import entity.dto.UsaDataStock;
+import dto.entity.UsaDataStock;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
@@ -21,7 +21,7 @@ public class UsaStockWindow extends BaseDataWindow {
     /**
      * 实体map对应的表头
      */
-    private static final String columnNames = "股票名称,代码,当前价,涨跌,涨跌幅,成交量,成交额";
+    private static final String COLUMN_NAMES = "股票名称,代码,当前价,涨跌,涨跌幅,成交量,成交额";
 
     public UsaStockWindow() {
         jtable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -29,7 +29,7 @@ public class UsaStockWindow extends BaseDataWindow {
         jtable.setRowHeight(Math.max(jtable.getRowHeight(), metrics.getHeight()));
 
         startButton.addActionListener(e -> {
-            startScheduler(columnNames);
+            startScheduler(COLUMN_NAMES);
             startButton.setEnabled(false);
             stopButton.setEnabled(true);
 
@@ -39,9 +39,7 @@ public class UsaStockWindow extends BaseDataWindow {
             startButton.setEnabled(true);
             stopButton.setEnabled(false);
         });
-        /**
-         * 数据对象创建
-         */
+
         UsaDataStock usaDataStock = new UsaDataStock();
         hashMap.put(usaDataStock.getUri(), usaDataStock);
 
