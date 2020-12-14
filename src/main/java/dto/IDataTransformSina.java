@@ -20,9 +20,9 @@ public interface IDataTransformSina {
     Function<String, String> HIDDEN_MODE = s -> AppSettingState.getInstance().getHiddenMode() ? PinyinUtils.toPinyin(s) : s;
 
     /**
-     * 国内数据转换A股与基金等
+     * 国内A股指数数据转换
      */
-    Function<String, String[]> CN_TSF = s  -> {
+    Function<String, String[]> CN_INDEX_TSF = s  -> {
         String[] array = s.replace("var hq_str_s_", "")
                 .split(",|(=\")");
         BigDecimal vol = new BigDecimal(array[5]).divide(BigDecimal.valueOf(1000000), 3, BigDecimal.ROUND_DOWN);
@@ -36,15 +36,67 @@ public interface IDataTransformSina {
         return array;
     };
     /**
+     * 国内基金数据转换
+     */
+    Function<String, String[]> CN_FUND_TSF = s  -> {
+        String[] array = s.replace("var hq_str_s_", "")
+                .split(",|(=\")");
+        BigDecimal vol = new BigDecimal(array[5]).divide(BigDecimal.valueOf(10000), 3, BigDecimal.ROUND_DOWN);
+        BigDecimal amount = new BigDecimal(array[6]);
+        String temp = array[0];
+        array[0] = HIDDEN_MODE.apply(array[1]);
+        array[1] = temp;
+        array[4] = array[4] + "%";
+        array[5] = vol.toString();
+        array[6] = amount.toString();
+        return array;
+    };
+    /**
+     * 国内数据转换A股数据
+     */
+    Function<String, String[]> CN_TSF = s  -> {
+        String[] array = s.replace("var hq_str_s_", "")
+                .split(",|(=\")");
+        BigDecimal vol = new BigDecimal(array[5]).divide(BigDecimal.valueOf(10000), 3, BigDecimal.ROUND_DOWN);
+        BigDecimal amount = new BigDecimal(array[6]).divide(BigDecimal.valueOf(10000), 3, BigDecimal.ROUND_DOWN);
+        String temp = array[0];
+        array[0] = HIDDEN_MODE.apply(array[1]);
+        array[1] = temp;
+        array[4] = array[4] + "%";
+        array[5] = vol.toString();
+        array[6] = amount.toString();
+        return array;
+    };
+    /**
+     * 美股指数数据转换
+     */
+    Function<String, String[]> USA_INDEX_TSF = s -> {
+        String[] array = s.replace("var hq_str_gb_", "")
+                .split(",|(=\")");
+
+        BigDecimal vol = BigDecimal.valueOf(Double.parseDouble(array[11])).divide(BigDecimal.valueOf(100000000), 3, BigDecimal.ROUND_DOWN);
+        return new String[]{HIDDEN_MODE.apply(array[1]), array[0], array[2], array[5], array[3] + "%",  vol.toString(),""};
+
+    };
+    /**
      * 美股数据转换
      */
     Function<String, String[]> USA_TSF = s -> {
         String[] array = s.replace("var hq_str_gb_", "")
                 .split(",|(=\")");
 
-        BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(array[11])).divide(BigDecimal.valueOf(100000000), 3, BigDecimal.ROUND_DOWN);
-        return new String[]{HIDDEN_MODE.apply(array[1]), array[0], array[2], array[5], array[3] + "%", "", amount.toString()};
+        BigDecimal vol = BigDecimal.valueOf(Double.parseDouble(array[11])).divide(BigDecimal.valueOf(10000), 3, BigDecimal.ROUND_DOWN);
+        return new String[]{HIDDEN_MODE.apply(array[1]), array[0], array[2], array[5], array[3] + "%",  vol.toString(),""};
 
+    };
+    /**
+     * 港股指数数据转换
+     */
+    Function<String, String[]> HK_INDEX_TSF = s -> {
+        String[] array = s.replace("var hq_str_rt_", "")
+                .split(",|(=\")");
+        BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(array[12])).divide(BigDecimal.valueOf(100000), 3, BigDecimal.ROUND_DOWN);
+        return new String[]{HIDDEN_MODE.apply(array[2]), array[0], array[7], array[8], array[9] + "%", "", amount.toString()};
     };
     /**
      * 港股数据转换
@@ -52,8 +104,9 @@ public interface IDataTransformSina {
     Function<String, String[]> HK_TSF = s -> {
         String[] array = s.replace("var hq_str_rt_", "")
                 .split(",|(=\")");
-        BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(array[12])).divide(BigDecimal.valueOf(100000), 3, BigDecimal.ROUND_DOWN);
-        return new String[]{HIDDEN_MODE.apply(array[2]), array[0], array[7], array[8], array[9] + "%", "", amount.toString()};
+        BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(array[12])).divide(BigDecimal.valueOf(100000000), 3, BigDecimal.ROUND_DOWN);
+        BigDecimal vol = BigDecimal.valueOf(Double.parseDouble(array[13])).divide(BigDecimal.valueOf(10000), 3, BigDecimal.ROUND_DOWN);
+        return new String[]{HIDDEN_MODE.apply(array[2]), array[0], array[7], array[8], array[9] + "%", vol.toString(), amount.toString()};
     };
     /**
      * 期货指数数据转换

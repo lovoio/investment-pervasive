@@ -31,7 +31,6 @@ public class CnDataStock extends BaseData implements IDataTransformSina {
 
     @Override
     void initParse(Map<String, Function<String, String[]>> map) {
-        // 已经存在的可以不用重复配置
         map.put("var hq_str_s_", CN_TSF);
     }
 

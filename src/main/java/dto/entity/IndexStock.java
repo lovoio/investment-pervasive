@@ -27,9 +27,9 @@ public class IndexStock extends BaseData implements IDataTransformSina {
     @Override
     void initParse(Map<String, Function<String, String[]>> map) {
 
-        map.put("var hq_str_s_", CN_TSF);
-        map.put("var hq_str_gb_", USA_TSF);
-        map.put("var hq_str_rt_",HK_TSF);
+        map.put("var hq_str_s_", CN_INDEX_TSF);
+        map.put("var hq_str_gb_", USA_INDEX_TSF);
+        map.put("var hq_str_rt_",HK_INDEX_TSF);
         map.put("var hq_str_hf_", FUTURE_TSF);
     }
 

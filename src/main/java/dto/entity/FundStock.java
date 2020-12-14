@@ -26,8 +26,7 @@ public class FundStock extends BaseData implements IDataTransformSina {
 
     @Override
     void initParse(Map<String, Function<String, String[]>> map) {
-        //指数窗口实体中已经设置
-        map.put("var hq_str_s_", CN_TSF);
+        map.put("var hq_str_s_", CN_FUND_TSF);
     }
 
 

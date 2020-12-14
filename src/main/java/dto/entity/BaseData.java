@@ -32,7 +32,7 @@ public abstract class BaseData {
     /**
      * 所有子类共享，相同uri的可以节省http请求
      */
-    private static Map<String, Function<String, String[]>> hashMap = new HashMap<>(8);
+    private  Map<String, Function<String, String[]>> hashMap = new HashMap<>(8);
     /**
      * 接口要请求的参数代码
      */

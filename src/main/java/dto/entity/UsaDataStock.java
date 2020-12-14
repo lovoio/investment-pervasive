@@ -27,7 +27,6 @@ public class UsaDataStock extends BaseData implements IDataTransformSina {
 
     @Override
     void initParse(Map<String, Function<String, String[]>> map) {
-        //指数窗口实体中已经设置
         map.put("var hq_str_gb_", USA_TSF);
     }
 
