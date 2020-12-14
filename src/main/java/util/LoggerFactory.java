@@ -14,15 +14,28 @@ import com.intellij.openapi.project.Project;
 public class LoggerFactory {
     private Project project;
 
-    private LoggerFactory(Project project) {
+    private LoggerFactory() {
+    }
+
+    public static LoggerFactory getLogger() {
+        return new LoggerFactory();
+    }
+
+    /**
+     * 兼容测试
+     *
+     * @param project
+     */
+    public void setProject(Project project) {
         this.project = project;
     }
 
-    public static LoggerFactory getLogger(Project project) {
-        return new LoggerFactory(project);
-    }
-
     public void info(String message) {
-        Notifications.Bus.notify(new Notification("ip_log", "IP", message, NotificationType.INFORMATION), this.project);
+        if (this.project != null) {
+            /**
+             * 兼容单元测试
+             */
+            Notifications.Bus.notify(new Notification("ip_log", "IP", message, NotificationType.INFORMATION), this.project);
+        }
     }
 }

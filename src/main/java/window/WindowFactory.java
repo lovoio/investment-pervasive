@@ -15,11 +15,11 @@ import util.LoggerFactory;
  * @description : 窗口工厂，所有数据窗口都在这里创建并添加
  **/
 public class WindowFactory implements ToolWindowFactory {
-    public static LoggerFactory logger;
+    public static LoggerFactory logger = LoggerFactory.getLogger();
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        logger = LoggerFactory.getLogger(project);
+        logger.setProject(project);
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
 
         IndexWindow indexWindow = new IndexWindow();

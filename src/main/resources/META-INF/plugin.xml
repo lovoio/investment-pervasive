@@ -1,8 +1,8 @@
 <idea-plugin>
     <id>com.lovoio.investment-pervasive</id>
     <name>IP</name>
-    <vendor email="lovoio@126.com" url="http://www.lovoio.com">none</vendor>
-
+    <vendor email="lovoio@126.com" url="https://github.com/lovoio/investment-pervasive">lovoio</vendor>
+    <version>1.0.2</version>
     <description><![CDATA[
      investment pervasive . <br>
      Adopt the data interface of Sina.

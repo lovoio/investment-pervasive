@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.rocking'
-version '1.0.1'
+version '1.0.2'
 
 repositories {
     maven { url 'https://maven.aliyun.com/repository/google' }
@@ -24,6 +24,17 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
+     1.0.2： unit test compatiblec Event log code  <br>
      1.0.1： fixed setting persistence,add Event Log<br>
      """
+}
+
+publishPlugin {
+    channels = 'Stable'
+    //自己设置到启动的环境变量当中
+    token = System.getenv("GRADLE_PROJECT_IntellijPublishToken")
+}
+
+test(){
+    println( System.getenv("GRADLE_PROJECT_IntellijPublishToken"))
 }
