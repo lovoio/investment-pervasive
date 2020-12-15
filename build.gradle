@@ -23,9 +23,10 @@ intellij {
     version '2020.1.2'
 }
 patchPluginXml {
-    changeNotes """
-     1.0.2： unit test compatible Event log code  <br>
-     1.0.1： fixed setting persistence,add Event Log <br>
+    changeNotes """ 
+     1.0.0: 根据设置窗口从新浪接口获取并展示核心指数，基金，美股，港股，A股数据 <br> 
+     1.0.1: 添加事件日志，配置使用gradle publishPlugin task <br> 
+     1.0.2: 修复数据展示细节错误,代码重构，根据Alibaba coding guidelines进行代码审查处理 <br>
      """
 }
 
