@@ -18,14 +18,14 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="config.AppSettingState"/>
+        <applicationService serviceImplementation="com.lovoio.config.AppSettingState"/>
         <!-- Add your extensions here -->
         <toolWindow icon="/icon_mt.png"
                     anchor="left" id="IP"
-                    factoryClass="window.WindowFactory"/>
+                    factoryClass="com.lovoio.window.WindowFactory"/>
 
         <applicationConfigurable id="i_p_setting" groupId="other"
-                                 instance="window.setting.ConfigWindow"
+                                 instance="com.lovoio.window.setting.ConfigWindow"
                                  displayName="Investment Pervasive"/>
     </extensions>
 
