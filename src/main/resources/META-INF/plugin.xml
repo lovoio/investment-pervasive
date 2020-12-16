@@ -2,14 +2,14 @@
     <id>com.lovoio.investment-pervasive</id>
     <name>IP</name>
     <vendor email="lovoio@126.com" url="https://github.com/lovoio/investment-pervasive">lovoio</vendor>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <description><![CDATA[
      Investment Pervasive !
-     A IDEA  plugin for stock data.
-     Adopt the data interface of Sina.<br>
+     A IDEA plugin for stock data. <br>
+     Adopt the data interface of Sina.
      Support US stocks, Hong Kong stocks, A shares, funds, commonly used index, near real-time update view <br>
      投资无处不在.<br>
-     usage : https://github.com/bytebeats/mns
+     usage : https://github.com/lovoio/investment-pervasive
     <em>采用新浪的数据接口。
     支持美股，港股，A股，常用指数，基金的实时更新查看 </em>
     ]]></description>
