@@ -51,7 +51,7 @@ public enum GlobalScheduler {
         if (future != null) {
             future.cancel(true);
             windowScheduleMap.remove(windowClass);
-            WindowFactory.logger.info(windowClass.getSimpleName() + "close scheduler:"+future.isCancelled());
+            WindowFactory.logger.info(windowClass.getSimpleName() + " close scheduler:"+future.isCancelled());
         }
     }
 

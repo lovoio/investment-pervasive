@@ -137,7 +137,7 @@ public abstract class BaseDataWindow {
             }
             WindowFactory.logger.info(this.getClass() + "---all Windows are not displayed !");
         }
-        globalConfig.stopScheduler(this);
+        this.stopScheduler();
         return true;
     }
 

@@ -19,4 +19,8 @@ public class PinyinUtils {
         return pyb.toString();
     }
 
+    public static void main(String[] args) {
+        System.out.println(toPinyin("中国人aaaHHJdsK"));
+    }
+
 }
