@@ -3,6 +3,7 @@ package com.lovoio.window;
 import com.lovoio.config.AppSettingState;
 import com.lovoio.config.GlobalScheduler;
 import com.lovoio.dto.entity.BaseData;
+import com.lovoio.dto.entity.CnDataStock;
 import com.lovoio.util.PinyinUtils;
 
 import javax.swing.*;
@@ -38,6 +39,7 @@ public abstract class BaseDataWindow {
      * @return JPanel
      */
     abstract JPanel getContent();
+
     /**
      * 获取列明，逗号给开
      *
@@ -47,24 +49,28 @@ public abstract class BaseDataWindow {
 
     /**
      * 更新操作按钮
+     *
      * @param isSync 是否同步
      */
-    abstract  void updateButtonStatus(boolean isSync);
+    abstract void updateButtonStatus(boolean isSync);
+
     /**
      * 更新窗口Table视图
      *
      * @param tableModel 数据表格模型
-     * @param time 时间字符串
+     * @param time       时间字符串
      */
     abstract void updateTableView(TableModel tableModel, String time);
+
     /**
      * 统一更新所有窗口对象的配置
+     *
      * @param restartScheduler 是否重启定时任务
      */
     public static void updateWindowsConfig(boolean restartScheduler) {
         windowsMap.values().stream().flatMap(Collection::stream).forEach(bdw -> {
-            if (restartScheduler && !bdw.isUnattended()){
-              bdw.restartScheduler();
+            if (restartScheduler && !bdw.isUnattended()) {
+                bdw.restartScheduler();
             }
             for (BaseData value : bdw.hashMap.values()) {
                 value.resetCodes();
@@ -78,7 +84,7 @@ public abstract class BaseDataWindow {
      */
     HashMap<String, BaseData> hashMap = new HashMap<>(8);
 
-    public BaseDataWindow() {
+    public BaseDataWindow(List<BaseData> baseDataList) {
         List<BaseDataWindow> windows = windowsMap.get(this.getClass());
         if (windows == null) {
             windows = new ArrayList<>();
@@ -86,6 +92,13 @@ public abstract class BaseDataWindow {
             windowsMap.put(this.getClass(), windows);
         } else {
             windows.add(this);
+        }
+        if (baseDataList == null || baseDataList.isEmpty()) {
+            WindowFactory.logger.info(this.getClass() + "--- dto BaseData  Entity undetected!");
+        } else {
+            for (BaseData baseData : baseDataList) {
+                hashMap.put(baseData.getUri(), baseData);
+            }
         }
     }
 
@@ -96,7 +109,7 @@ public abstract class BaseDataWindow {
      * 数据面板不展示则不需要更新
      */
     protected void startScheduler() {
-         isSync =true;
+        isSync = true;
         this.scheduler = globalConfig.scheduler(
                 this,
                 hashMap,
@@ -106,7 +119,7 @@ public abstract class BaseDataWindow {
                     DefaultTableModel model = new DefaultTableModel(objArray, columnStr.split(","));
                     List<BaseDataWindow> windows = windowsMap.get(this.getClass());
                     for (BaseDataWindow window : windows) {
-                        if ( window.getContent().isShowing() ) {
+                        if (window.getContent().isShowing()) {
                             window.updateTableView(model, time);
                             window.updateButtonStatus(isSync);
                         }
@@ -125,6 +138,7 @@ public abstract class BaseDataWindow {
     /**
      * 当无人关注时返回true
      * 只要有一个窗口是同步状态并且是展示的则判定为有人关注
+     *
      * @return boolean
      */
     public boolean isUnattended() {
@@ -147,7 +161,7 @@ public abstract class BaseDataWindow {
     void stopScheduler() {
         isSync = false;
         List<BaseDataWindow> windows = windowsMap.get(this.getClass());
-        if(!windows.isEmpty()){
+        if (!windows.isEmpty()) {
             for (BaseDataWindow window : windows) {
                 window.updateButtonStatus(isSync);
             }

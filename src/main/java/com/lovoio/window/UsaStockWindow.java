@@ -1,10 +1,12 @@
 package com.lovoio.window;
 
+import com.lovoio.dto.entity.BaseData;
 import com.lovoio.dto.entity.UsaDataStock;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.List;
 
 /**
  * @author : Roc
@@ -38,7 +40,8 @@ public class UsaStockWindow extends BaseDataWindow {
         }
     }
 
-    public UsaStockWindow() {
+    public UsaStockWindow(List<BaseData> baseDataList) {
+        super(baseDataList);
         jtable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         FontMetrics metrics = jtable.getFontMetrics(jtable.getFont());
         jtable.setRowHeight(Math.max(jtable.getRowHeight(), metrics.getHeight()));

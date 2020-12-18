@@ -1,11 +1,13 @@
 package com.lovoio.window;
 
 
+import com.lovoio.dto.entity.BaseData;
 import com.lovoio.dto.entity.IndexStock;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.List;
 
 /**
  * @author : Roc
@@ -38,8 +40,12 @@ public class IndexWindow extends BaseDataWindow {
             stopButton.setEnabled(false);
         }
     }
-    public IndexWindow() {
-        init();
+    public IndexWindow(List<BaseData> baseDataList) {
+        super(baseDataList);
+        jtable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        FontMetrics metrics = jtable.getFontMetrics(jtable.getFont());
+        jtable.setRowHeight(Math.max(jtable.getRowHeight(), metrics.getHeight()));
+
         startButton.addActionListener(e -> {
             startScheduler( );
             startButton.setEnabled(false);
@@ -57,9 +63,7 @@ public class IndexWindow extends BaseDataWindow {
      * 初始化窗口以及要更新哪些实体数据
      */
     private void init() {
-        jtable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        FontMetrics metrics = jtable.getFontMetrics(jtable.getFont());
-        jtable.setRowHeight(Math.max(jtable.getRowHeight(), metrics.getHeight()));
+
 
         IndexStock indexStock = new IndexStock();
         hashMap.put(indexStock.getUri(), indexStock);

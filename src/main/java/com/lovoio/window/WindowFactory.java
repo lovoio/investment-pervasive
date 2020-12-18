@@ -6,8 +6,12 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.content.ContentManager;
+import com.lovoio.dto.entity.*;
 import org.jetbrains.annotations.NotNull;
 import com.lovoio.util.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author : Roc
@@ -22,11 +26,11 @@ public class WindowFactory implements ToolWindowFactory {
         logger.setProject(project);
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
 
-        IndexWindow indexWindow = new IndexWindow();
-        CnStockWindow cnStockWindow = new CnStockWindow();
-        HkStockWindow hkStockWindow = new HkStockWindow();
-        UsaStockWindow usaStockWindow = new UsaStockWindow();
-        FundWindow fundWindow = new FundWindow();
+        IndexWindow indexWindow = new IndexWindow(Collections.singletonList(new IndexStock()));
+        CnStockWindow cnStockWindow = new CnStockWindow(Collections.singletonList(new CnDataStock()));
+        HkStockWindow hkStockWindow = new HkStockWindow(Collections.singletonList(new HkDataStock()));
+        UsaStockWindow usaStockWindow = new UsaStockWindow(Collections.singletonList(new UsaDataStock()));
+        FundWindow fundWindow = new FundWindow(Collections.singletonList(new FundStock()));
 
         Content indexContent = contentFactory.createContent(indexWindow.getContent(), "Index", false);
         Content cnContent = contentFactory.createContent(cnStockWindow.getContent(), "CN", false);
